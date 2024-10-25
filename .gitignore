@@ -1,0 +1,17 @@
+# django
+# JS
+# npm
+# python
+*.log
+.env
+.idea
+.vscode
+__pycache__
+config.js
+db.sqlite3
+env
+media
+node_modules
+staticfiles
+tmp
+venv

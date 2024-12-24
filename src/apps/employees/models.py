@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Employee(models.Model):
-    """Model for restaurant employees."""
+    """Model for config employees."""
     ROLE_CHOICES = [
         ('MANAGER', 'Manager'),
         ('CHEF', 'Chef'),

@@ -5,7 +5,7 @@ from src.apps.menus.models import MenuItem
 
 
 class Order(models.Model):
-    """Model for customer orders in the restaurant."""
+    """Model for customer orders in the config."""
     STATUS_CHOICES = [
         ('PENDING', 'Pending'),
         ('IN_PROGRESS', 'In Progress'),

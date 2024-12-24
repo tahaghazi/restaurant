@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Table(models.Model):
-    """Model for restaurant tables."""
+    """Model for config tables."""
     table_number = models.IntegerField(unique=True)
     capacity = models.IntegerField()  # Number of seats at the table
     is_available = models.BooleanField(default=True)  # Track if the table is available

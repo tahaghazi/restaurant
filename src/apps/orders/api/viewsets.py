@@ -14,9 +14,10 @@ class OrderItemViewSet(viewsets.ModelViewSet):
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+    new = False
 
     def get_object(self):
-        if self.kwargs:
+        if not self.new:
             return super().get_object()
         # Get or create the order
         obj = Order.objects.get_or_create(user=self.request.user, ordered=False)[0]
@@ -55,4 +56,5 @@ class OrderViewSet(viewsets.ModelViewSet):
         return obj
 
     def list(self, request, *args, **kwargs):
+        self.new = True
         return super().retrieve(request, *args, **kwargs)

@@ -10,7 +10,6 @@ __pycache__
 config.js
 db.sqlite3
 env
-media
 node_modules
 staticfiles
 tmp

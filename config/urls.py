@@ -14,10 +14,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
+from config import settings
+from src.apps.menus.api.viewsets import MenuItemViewSet
+from src.apps.orders.api.viewsets import OrderViewSet, OrderItemViewSet
+
+router = DefaultRouter()
+router.register(r"menu", MenuItemViewSet, basename="menu")
+router.register(r"cart", OrderViewSet, basename="cart")
+router.register(r"orders", OrderItemViewSet, basename="orders")
 urlpatterns = [
     path("admin/", admin.site.urls),
-]
+    path("", include("src.apps.menus.urls")),
+    path("api/", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("api/rest-auth/", include("dj_rest_auth.urls")),
 
+
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

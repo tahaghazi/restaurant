@@ -18,7 +18,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     def get_object(self):
         obj = Order.objects.get_or_create(user=self.request.user, ordered=False)[0]
         order_items = OrderItem.objects.filter(user=self.request.user, ordered=False)
-        obj.items.set(order_items)
+        obj.order_items.set(item.id for item in order_items)
         obj.save()
         return obj
 

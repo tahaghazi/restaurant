@@ -10,11 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import datetime
+import datetime
 from pathlib import Path
+from pathlib import Path
+
+import django
+from django.utils.encoding import force_str, smart_str
+from django.utils.translation import gettext, gettext_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+django.utils.encoding.smart_text = smart_str
+django.utils.encoding.force_text = force_str
+django.utils.translation.ugettext = gettext
+django.utils.translation.ugettext_lazy = gettext_lazy
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -52,10 +62,13 @@ INSTALLED_APPS = [
     'src.apps.inventory',
     'src.apps.employees',
     'src.apps.menus',
+    'src.apps.users',
 
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -63,6 +76,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -160,21 +174,21 @@ REST_FRAMEWORK = {
     ),
 }
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
-    "AUTH_HEADER_TYPES": ("Bearer", "JWT", "Token"),
+    "AUTH_HEADER_TYPES": ("JWT"),
     "ROTATE_REFRESH_TOKENS": True,
 }
 
 REST_USE_JWT = True
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-    # "REGISTER_SERIALIZER": "apps.users.api.serializers.RegisterSerializer",
+    "REGISTER_SERIALIZER": "src.apps.users.api.serializers.RegisterSerializer",
 }
 
 REST_AUTH_SERIALIZERS = {
     # "USER_DETAILS_SERIALIZER": "src.apps.authentication.custom_account.api.serializers.UserDetailsSerializer",
-    # "LOGIN_SERIALIZER": "apps.users.api.serializers.CustomLoginSerializer",
+    # "LOGIN_SERIALIZER": "src.apps.users.api.serializers.CustomLoginSerializer",
     # "PASSWORD_RESET_SERIALIZER": "src.apps.authentication.custom_account.api.serializers.CustomPasswordResetSerializer",  # noqa
 }
 # AUTH_USER_MODEL = 'users.CustomUser'

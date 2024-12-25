@@ -32,7 +32,8 @@ urlpatterns = [
     path("", include("src.apps.menus.urls")),
     path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-    path("api/rest-auth/", include("dj_rest_auth.urls")),
+    path("api/auth/", include("dj_rest_auth.urls")),
+    path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
 
 
 ]
